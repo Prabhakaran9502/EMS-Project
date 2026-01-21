@@ -10,6 +10,7 @@ import { FiDownload, FiFileText } from "react-icons/fi";
 import { FiEye, FiUserPlus } from "react-icons/fi";
 import Modal from "../../Components/Common/Modal";
 import AssignEmployeeForm from "./AssignEmployeeForm";
+import ViewEmployee from "./ViewEmployee";
 
 export default function UserList() {
     const navigate = useNavigate();
@@ -28,6 +29,9 @@ export default function UserList() {
 
     const [openAssign, setOpenAssign] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+
+    const [openView, setOpenView] = useState(false);
+    const [viewUser, setViewUser] = useState(null);
 
 
     useEffect(() => {
@@ -254,11 +258,15 @@ export default function UserList() {
                                             {user.IsEmployee === 1 && (
                                                 <button
                                                     className="btn-view"
-                                                    onClick={() => navigate(`/users/view/${user.UserId}`)}
                                                     title="View Employee"
+                                                    onClick={() => {
+                                                        setViewUser(user);
+                                                        setOpenView(true);
+                                                    }}
                                                 >
                                                     <FiEye />
                                                 </button>
+
                                             )}
 
                                             <button
@@ -331,6 +339,18 @@ export default function UserList() {
                         onClose={() => setOpenAssign(false)}
                     />
                 </Modal>
+
+                <Modal
+                    isOpen={openView}
+                    onClose={() => setOpenView(false)}
+                    title="Employee Details"
+                >
+                    <ViewEmployee
+                        userId={viewUser?.UserId}
+                        onClose={() => setOpenView(false)}
+                    />
+                </Modal>
+
 
             </main>
         </div>

@@ -1,13 +1,12 @@
 ﻿using Backend.Data;
 using Backend.Models;
 using System;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Mail;
-using System.Security.Cryptography;
-using System.Text;
+using System.Net.Mail; 
 using System.Web;
 using System.Web.Http;
 
@@ -40,7 +39,9 @@ namespace Backend.Controllers
 
             string tempPassword = GenerateTempPassword();
             
-            SendEmail(email, tempPassword);
+            
+            EmailHelper.SendPasswordResetEmail(email, tempPassword);
+           
             dal.UpdatePassword(email, tempPassword);
             
 
@@ -56,25 +57,6 @@ namespace Backend.Controllers
                 .Select(s => s[rnd.Next(s.Length)]).ToArray());
         }
 
-        public static void SendEmail(string toEmail, string tempPassword)
-        {
-            try
-            {
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress("prabhu950522@gmail.com");
-                mail.To.Add(toEmail);
-                mail.Subject = "Password Reset";
-                mail.Body = $"Your temporary password is: {tempPassword}\nPlease login and change it.";
-                mail.IsBodyHtml = false;
-
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-                smtp.Credentials = new NetworkCredential("prabhu950522@gmail.com", "pk22@kaR");
-                smtp.EnableSsl = true;
-                smtp.Send(mail);
-            }
-            catch (Exception ex)
-            { }
-        }
 
         [HttpPost]
         [Route("")]
@@ -153,9 +135,12 @@ namespace Backend.Controllers
                 phone = row["Emp_Phone"].ToString(),
                 gender = row["Emp_Gender"].ToString(),
                 department_id = Convert.ToInt32(row["Emp_Department_Id"]),
+                department =  row["Department_Name"].ToString(),
                 designation_id = Convert.ToInt32(row["Emp_Designation_Id"]),
+                designation =  row["Designation_Name"].ToString(),
                 salary = Convert.ToDecimal(row["Emp_Salary"]),
                 employmentType_id = Convert.ToInt32(row["EmploymentType_Id"]),
+                employmentType = row["Employment_Type_Name"].ToString(),
                 location = row["Emp_Location"].ToString(),
                 address = row["Emp_Address"].ToString(),
 

@@ -20,7 +20,7 @@ export default function Login() {
                 setLoginError("");
             const res = await loginUser({ email, password });
 
-            alert("Login Successful ✅");
+            // alert("Login Successful ✅");
 
             // Optional: store user
             localStorage.setItem("user", JSON.stringify(res.data));
