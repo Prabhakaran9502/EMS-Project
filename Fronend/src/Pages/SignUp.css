@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.signup-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px 30px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    color: white;
+}
+
+.signup-card h2 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 6px;
+}
+
+.signup-card p {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 25px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 14px 10px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    outline: none;
+    color: white;
+    font-size: 16px;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+.input-box input:focus+label,
+.input-box input:valid+label {
+    top: -6px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.password-box {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+}
+
+.signup-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 30px;
+    border: none;
+    background: white;
+    color: #764ba2;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.signup-btn:hover {
+    background: #f2f2f2;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 22px;
+    font-size: 13px;
+}
+
+.links a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* 📱 Mobile */
+@media (max-width: 480px) {
+    .signup-card {
+        padding: 28px 22px;
+    }
+
+    .signup-card h2 {
+        font-size: 22px;
+    }
+}

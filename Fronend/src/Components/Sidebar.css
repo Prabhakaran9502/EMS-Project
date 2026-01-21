@@ -1,0 +1,85 @@
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: transform 0.3s ease;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.welcome-name {
+    margin-bottom: 5px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-item span {
+    white-space: nowrap;
+}
+
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.logout {
+    margin-top: auto;
+}
+
+/* Mobile hidden by default */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 100;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        position: fixed;
+    }
+
+    .menu-btn {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        border: none;
+        background: var(--sidebar-bg);
+        color: var(--sidebar-text);
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 200;
+        font-size: 18px;
+    }
+}
+
+/* Hide menu button on desktop */
+@media (min-width: 769px) {
+    .menu-btn {
+        display: none;
+    }
+}

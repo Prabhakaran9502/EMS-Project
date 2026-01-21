@@ -1,0 +1,22 @@
+.protected-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    margin-left: 110px;
+    width: 100%;
+    padding: 16px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .protected-layout {
+        flex-direction: column;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        padding: 12px;
+    }
+}

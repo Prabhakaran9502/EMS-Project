@@ -1,0 +1,13 @@
+.settings-layout {
+    display: flex;
+}
+
+.settings-main {
+    margin-left: 220px;
+    padding: 24px;
+    width: 100%;
+}
+
+.settings-main h2 {
+    margin-bottom: 8px;
+}
