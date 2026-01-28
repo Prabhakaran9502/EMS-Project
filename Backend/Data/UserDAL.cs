@@ -84,7 +84,8 @@ namespace Backend.Data
                     {
                         UserId = Convert.ToInt32(dr["User_Id"]),
                         UserName = dr["USER_NAME"].ToString(),
-                        Email = dr["Email_Id"].ToString()
+                        Email = dr["Email_Id"].ToString(),
+                        RoleId = Convert.ToInt32(dr["Role_Id"])
                     };
                 }
             }
@@ -185,5 +186,26 @@ namespace Backend.Data
             }
         }
 
+
+        public DataSet GetMenuRoles(int RoleId)
+        {
+            DataSet ds = new DataSet();
+
+            using (SqlConnection con = new SqlConnection(conStr))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetRoleMenu", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Role_Id", RoleId);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(ds);
+                    }
+                }
+            }
+
+            return ds;
+        }
     }
 }

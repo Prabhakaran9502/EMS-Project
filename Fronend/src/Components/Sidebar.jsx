@@ -1,14 +1,19 @@
 import { NavLink } from "react-router-dom";
-import { FiHome, FiUsers, FiSettings, FiLogOut, FiMenu } from "react-icons/fi";
-import { FaUserTie } from "react-icons/fa";
-import { useState } from "react";
+import { FiLogOut, FiMenu } from "react-icons/fi";
+import { useState, useEffect } from "react";
 import "./Sidebar.css";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { menuIcons } from "./menuIcons";
+import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../store/authSlice";
+
 
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false); // mobile toggle
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const { user, menu } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
     return (
         <>
@@ -16,43 +21,27 @@ export default function Sidebar() {
                 <h3 className="logo">EMS</h3>
                 <h4 className="welcome-name">Hi {user ? user.UserName : "Guest"}</h4>
 
-                <NavLink
-                    to="/dashboard"
-                    className={({ isActive }) => "nav-item" + (isActive ? " active" : "")}
-                    onClick={() => setIsOpen(false)} // close on click mobile
-                >
-                    <FiHome />
-                    <span>Dashboard</span>
-                </NavLink>
+                {/* 🔹 Dynamic Menu */}
+                {menu.map((menu, index) => (
+                    <NavLink
+                        key={index}
+                        to={menu.path}
+                        className={({ isActive }) =>
+                            "nav-item" + (isActive ? " active" : "")
+                        }
+                        onClick={() => setIsOpen(false)}
+                    >
+                        {menuIcons[menu.Icon]}
+                        <span>{menu.Menu_Name}</span>
+                    </NavLink>
+                ))}
 
+                {/* Logout */}
                 <NavLink
-                    to="/employees"
-                    className={({ isActive }) => "nav-item" + (isActive ? " active" : "")}
-                    onClick={() => setIsOpen(false)}
+                    to="/login"
+                    className="nav-item logout"
+                    onClick={() => dispatch(logout())}
                 >
-                    <FiUsers />
-                    <span>Employees</span>
-                </NavLink>
-
-                <NavLink
-                    to="/users"
-                    className={({ isActive }) => "nav-item" + (isActive ? " active" : "")}
-                    onClick={() => setIsOpen(false)}
-                >
-                    <FaUserTie />
-                    <span>Users</span>
-                </NavLink>
-
-                <NavLink
-                    to="/settings"
-                    className={({ isActive }) => "nav-item" + (isActive ? " active" : "")}
-                    onClick={() => setIsOpen(false)}
-                >
-                    <FiSettings />
-                    <span>Settings</span>
-                </NavLink>
-
-                <NavLink to="/login" className="nav-item logout">
                     <FiLogOut />
                     <span>Logout</span>
                 </NavLink>
@@ -60,6 +49,8 @@ export default function Sidebar() {
                 <div style={{ padding: "12px" }}>
                     <ThemeSwitcher />
                 </div>
+
+
             </div>
 
             {/* Mobile menu button */}

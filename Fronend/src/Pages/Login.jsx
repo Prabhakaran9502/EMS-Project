@@ -2,7 +2,9 @@ import { useState } from "react";
 import "./Login.css";
 import { useNavigate, Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { loginUser } from "../Api/LoginApi";
+import { loginUser, fetchMenu } from "../Api/LoginApi";
+import { useDispatch } from "react-redux";
+import { setAuthData } from "../store/authSlice";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -12,6 +14,9 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [loginError, setLoginError] = useState("");
 
+    const dispatch = useDispatch();
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -19,13 +24,17 @@ export default function Login() {
             if (!email && !password)
                 setLoginError("");
             const res = await loginUser({ email, password });
-
-            // alert("Login Successful ✅");
-
-            // Optional: store user
-            localStorage.setItem("user", JSON.stringify(res.data));
+            const menuRes = await fetchMenu(res.data.RoleId);
+            dispatch(
+                setAuthData({
+                    user: res.data,
+                    role: res.data.RoleId,
+                    menu: menuRes.data.Table
+                })
+            );
 
             navigate("/dashboard");
+
         } catch (err) {
             setLoginError("Invalid login");
         }

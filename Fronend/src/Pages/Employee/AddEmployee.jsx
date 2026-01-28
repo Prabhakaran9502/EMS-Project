@@ -39,8 +39,7 @@ export default function AddEmployee() {
         setDepartments(res.data.Table || []);
         setDesignations(res.data.Table1 || []);
         setEmploymentTypes(res.data.Table2 || []);
-
-        // console.log(res.data);
+ 
     };
 
     const handleChange = (e) => {
@@ -55,8 +54,7 @@ export default function AddEmployee() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log("HI");
+ 
         if (emailError) {
             alert("Please fix errors before submitting");
             return;

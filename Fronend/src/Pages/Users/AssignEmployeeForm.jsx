@@ -39,7 +39,6 @@ export default function AssignEmployeeForm({ user, onClose }) {
         try {
             setLoading(true);
             const res = await getEmployeeDetails(user.UserId);
-            console.log(res.data);
             if (res.data) {
                 setEmployee({
                     userId: res.data.id,
@@ -122,7 +121,6 @@ export default function AssignEmployeeForm({ user, onClose }) {
                     formData.append(key, employee[key]);
                 }
             });
-            console.log(formData);
             await saveEmployee(formData);
 
             alert("Employee assigned successfully");

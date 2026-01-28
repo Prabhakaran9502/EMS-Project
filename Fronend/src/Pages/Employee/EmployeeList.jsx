@@ -35,8 +35,7 @@ export default function EmployeePage() {
     const fetchEmployees = async () => {
         try {
             setLoading(true);
-            const res = await getEmployees();
-            // console.log(res.data);
+            const res = await getEmployees(); 
             setEmployees(res.data);
         } catch (err) {
             setError("Failed to load employees");

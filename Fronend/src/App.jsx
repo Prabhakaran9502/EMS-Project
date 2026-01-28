@@ -14,6 +14,8 @@ import EditEmployee from "./Pages/Employee/EditEmployee";
 import UserLayout from "./Pages/Users/UserLayout";
 import UserList from "./Pages/Users/UserList";
 
+import Personal from "./Pages/Personal/personal";
+
 function App() {
   return (
     <Routes>
@@ -36,6 +38,7 @@ function App() {
           {/* <Route path="add" element={<AddEmployee />} /> */}
           {/* <Route path="edit/:id" element={<EditEmployee />} /> */}
         </Route>
+        <Route path="/personal" element={<Personal />} />
         <Route path="/settings" element={<Settings />} />
 
         {/* You can add more protected routes here */}

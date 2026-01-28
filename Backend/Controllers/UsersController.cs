@@ -19,6 +19,16 @@ namespace Backend.Controllers
         
         UserDAL userdal = new UserDAL();
 
+
+        [HttpGet]
+        [Route("fetchRoleMenu")]
+        public IHttpActionResult FetchRoleMenu(int RoleId)
+        {
+            var roles = userdal.GetMenuRoles(RoleId);
+            return Ok(roles);
+        }
+
+
         [HttpGet]
         [Route("check-email")]
         public IHttpActionResult CheckEmail(string email)

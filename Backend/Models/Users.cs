@@ -14,5 +14,6 @@ namespace Backend.Models
         public string ConfirmPassword { get; set; }
         public int UserId { get; set; }
         public int IsEmployee { get; set; }
+        public int RoleId { get; set; }
     }
 }
