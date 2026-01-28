@@ -106,17 +106,30 @@ namespace Backend.Controllers
             if (user == null)
                 return Unauthorized();
 
-            return Ok(user);
+            var token = JwtTokenHelper.GenerateToken(
+                            user.UserId,
+                            user.UserName,
+                            user.RoleId
+                        );
+
+            return Ok(new
+            {
+                user.UserId,
+                user.UserName,
+                user.RoleId,
+                token
+            });
         }
 
 
 
-        [HttpGet, Route("")]
+        [HttpGet, Authorize, Route("")]
         public IHttpActionResult GetUsers()
         {
             return Ok(userdal.GetUsers());
         }
 
+        [Authorize]
         public IHttpActionResult DeleteUsers(int id)
         {
             userdal.DeleteUsers(id);
@@ -124,7 +137,7 @@ namespace Backend.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet, Authorize]
         [Route("getEmployeeDetails/{id:int}")]
         public IHttpActionResult GetEmployeeDetails(int id)
         {
@@ -164,7 +177,7 @@ namespace Backend.Controllers
 
 
 
-        [HttpPost]
+        [HttpPost, Authorize]
         [Route("AssignEmployee")]
         public IHttpActionResult AssignEmployee()
         {

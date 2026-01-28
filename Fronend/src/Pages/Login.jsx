@@ -5,6 +5,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { loginUser, fetchMenu } from "../Api/LoginApi";
 import { useDispatch } from "react-redux";
 import { setAuthData } from "../store/authSlice";
+import { store } from "../store/store";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -23,13 +24,17 @@ export default function Login() {
         try {
             if (!email && !password)
                 setLoginError("");
+
             const res = await loginUser({ email, password });
+
             const menuRes = await fetchMenu(res.data.RoleId);
+
             dispatch(
                 setAuthData({
                     user: res.data,
                     role: res.data.RoleId,
-                    menu: menuRes.data.Table
+                    menu: menuRes.data.Table,
+                    token: res.data.token
                 })
             );
 

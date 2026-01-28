@@ -1,4 +1,5 @@
 import axios from "axios";
+import { store } from "../store/store";
 
 const axiosInstance = axios.create({
     baseURL: "https://localhost:44333/api", // 🔁 change to your backend URL
@@ -13,10 +14,22 @@ const axiosInstance = axios.create({
 ======================= */
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("token"); // or sessionStorage
+        const publicUrls = [
+            "/users/login",
+            "/users/forgot-password",
+            "/users/check-email"
+        ];
 
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+        const isPublic = publicUrls.some(url =>
+            config.url.includes(url)
+        );
+
+        if (!isPublic) {
+            const token = store.getState().auth.token;
+
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
         }
 
         return config;
@@ -24,24 +37,23 @@ axiosInstance.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
+
+
 /* =======================
    Response Interceptor
 ======================= */
 axiosInstance.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        // Global error handling
+    (response) => response, (error) => {
         if (error.response) {
             if (error.response.status === 401) {
-                console.error("Unauthorized – redirect to login");
-                // optional: window.location.href = "/login";
+                store.dispatch(logout());
+                window.location.href = "/login";
             }
-        } else if (error.code === "ECONNABORTED") {
+        }
+        else if (error.code === "ECONNABORTED") {
             console.error("Request timeout");
         }
-
         return Promise.reject(error);
-    }
-);
+    });
 
 export default axiosInstance;

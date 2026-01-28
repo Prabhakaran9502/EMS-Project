@@ -14,7 +14,7 @@ namespace EMS_WebAPI.Controllers
         EmployeeDAL dal = new EmployeeDAL();
 
 
-        [HttpGet]
+        [HttpGet, Authorize]
         [Route("getMasterData")]
         public IHttpActionResult GetEmployeeMasterData()
         {
@@ -24,13 +24,13 @@ namespace EMS_WebAPI.Controllers
 
 
 
-        [HttpGet, Route("")]
+        [HttpGet, Route(""), Authorize]
         public IHttpActionResult GetEmployees()
         {
             return Ok(dal.GetEmployees());
         }
 
-        [HttpGet, Route("{id:int}")]
+        [HttpGet, Route("{id:int}"), Authorize]
         public IHttpActionResult GetEmployee(int id)
         {
             var emp = dal.GetEmployee(id);
@@ -38,7 +38,7 @@ namespace EMS_WebAPI.Controllers
             return Ok(emp);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         [Route("")]
         public IHttpActionResult AddEmployee()
         {
@@ -86,7 +86,7 @@ namespace EMS_WebAPI.Controllers
             }
         }
 
-        [HttpPut, Route("{id:int}")]
+        [HttpPut, Route("{id:int}"), Authorize]
         public IHttpActionResult UpdateEmployee(int id)
         {
             try
@@ -134,7 +134,7 @@ namespace EMS_WebAPI.Controllers
             
         }
 
-        [HttpDelete, Route("{id:int}")]
+        [HttpDelete, Route("{id:int}"), Authorize]
         public IHttpActionResult DeleteEmployee(int id)
         {
             dal.DeleteEmployee(id);
