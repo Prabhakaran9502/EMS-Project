@@ -95,7 +95,7 @@ namespace Backend.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         [Route("login")]
         public IHttpActionResult Login(LoginRequest model)
         {

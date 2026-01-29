@@ -18,6 +18,19 @@ namespace Backend
             var issuer = ConfigurationManager.AppSettings["JwtIssuer"];
             var audience = ConfigurationManager.AppSettings["JwtAudience"];
 
+            app.Use(async (context, next) =>
+            {
+                // Allow Swagger without JWT
+                if (context.Request.Path.StartsWithSegments(
+                    new PathString("/swagger")))
+                {
+                    await next.Invoke();
+                    return;
+                }
+
+                await next.Invoke();
+            });
+
             app.UseJwtBearerAuthentication(new JwtBearerAuthenticationOptions
             {
                 AuthenticationMode = AuthenticationMode.Active,
